@@ -1,0 +1,53 @@
+def is_safe(board, row, col):
+    # Проверка строки и столбца
+    for i in range(col):
+        if board[row][i] == 1:
+            return False
+
+    # Проверка верхней диагонали
+    i, j = row, col
+    while i >= 0 and j >= 0:
+        if board[i][j] == 1:
+            return False
+        i -= 1
+        j -= 1
+
+    # Проверка нижней диагонали
+    i, j = row, col
+    while i < len(board) and j >= 0:
+        if board[i][j] == 1:
+            return False
+        i += 1
+        j -= 1
+
+    return True
+
+
+def solve_n_queens(board, col):
+    # Базовый случай — все ферзи расставлены
+    if col >= len(board):
+        return True
+
+    # Пробуем поставить ферзя в каждую строку текущего столбца
+    for row in range(len(board)):
+        if is_safe(board, row, col):
+            board[row][col] = 1  # Ставим ферзя
+
+            # Рекурсивно ставим следующего
+            if solve_n_queens(board, col + 1):
+                return True
+
+            board[row][col] = 0  # Откат (backtrack)
+
+    return False
+
+
+# Размер доски
+N = 8
+board = [[0] * N for _ in range(N)]
+
+if solve_n_queens(board, 0):
+    for row in board:
+        print(row)
+else:
+    print("Решение не найдено.")
