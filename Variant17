@@ -1,0 +1,49 @@
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+
+# --- ТРИ ОБХОДА ---
+
+def preorder(root):
+    if root:
+        print(root.value, end=" ")
+        preorder(root.left)
+        preorder(root.right)
+
+
+def inorder(root):
+    if root:
+        inorder(root.left)
+        print(root.value, end=" ")
+        inorder(root.right)
+
+
+def postorder(root):
+    if root:
+        postorder(root.left)
+        postorder(root.right)
+        print(root.value, end=" ")
+
+
+
+
+root = Node("A")
+root.left = Node("B")
+root.right = Node("C")
+root.left.left = Node("D")
+root.left.right = Node("E")
+
+
+# --- ТЕСТИРОВАНИЕ ---
+
+print("Preorder:  ", end="")
+preorder(root)      # A B D E C
+
+print("\nInorder:   ", end="")
+inorder(root)       # D B E A C
+
+print("\nPostorder: ", end="")
+postorder(root)     # D E B C A
